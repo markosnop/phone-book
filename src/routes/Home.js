@@ -50,11 +50,16 @@ const toggleForm = () => {
   setShowForm(!showForm);
 }
 
+const handleDelete = async (id) => {
+  await personService.remotve (id);
+  fetchData();
+}
+
   return (
     <div className="container">
       <h2>Home</h2>
 <button on click={toggleForm} className="btn btn success">
-  { showForm ? 'De volta ao formulario' }
+  { showForm ? 'De volta ao formulario' : 'voltar para tabela' }
   
   </button>
 
@@ -100,7 +105,15 @@ const toggleForm = () => {
               <td>{person.id}</td>
               <td>{person.nome}</td>
               <td>{person.numero}</td>
-              <td></td>
+              <td> 
+              <link to = {'/${persons.id}'} className= "btn btn-success">
+                <i class="bi bi-pencil"></i>Editar
+                </link>
+              <button className= "btn btn-danger mx-2">
+                onClick={() => handleDelete (persons.id)}
+              <i class="bi bi-trash3"></i>Excluir
+              </button>
+              </td>
             </tr>
           ))}
         </tbody>
