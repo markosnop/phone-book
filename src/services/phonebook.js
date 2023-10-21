@@ -10,7 +10,7 @@ const create = (personObject) => axios.post(urlBase, personObject);
 
 const remove = (id) => axios.delete(`${urlBase}/${id}`)
 
-const update = (id, personObject) => axios.patch(`${urlBase}/${id}`, personObject)
+const update = (id, personObject) => axios.put(`${urlBase}/${id}`, personObject)
 
 const personService = { getAll, getOne, create, remove, update };
 
