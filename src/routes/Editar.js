@@ -25,7 +25,7 @@ function Editar() {
   };
 
   const editPerson = async (event) => {
-    event.preventDeFault();
+    event.preventDefault();
 
     const personsObject = {
       nome: nome,
@@ -36,6 +36,10 @@ function Editar() {
 
     navigate("/");
   };
+
+const cancel = () =>{
+  navigate("/")
+};
 
   return (
     <div className="container">
@@ -60,7 +64,10 @@ function Editar() {
             className="form-control"
             onChange={handleNomeChange}
           />
-          <button className="btn btn-danger mx-4">Editar</button>
+          <button className="btn btn-secondary mt-4 mx-4">Editar</button>
+          <button className="btn btn-warning mt-4 mx-3" onClick={cancel}>
+            cancel
+          </button>
         </div>
       </form>
     </div>

@@ -7,17 +7,34 @@ function Home() {
   const [nome, setNome] = useState("");
   const [numero, setNumero] = useState("");
   const [showForm, setShowForm] = useState (false)
-
+const   [error,setError] = useState(null)
   useEffect(() => {
     fetchData();
   }, []);
  
 
  const fetchData = () => {
-  personService.getAll().then((response) => {
-    setPersons(response.data);
-  
- }); 
+  personService.
+  getAll()
+  .then((response) => {
+  setPersons(response.data);
+  setShowForm (false)
+ })
+ .catch((error) => {
+  if (error.response) {
+    // O servidor respondeu com um status de erro
+    console.error("Erro na requisição:", error.response);
+  } else if (error.request) {
+    // A requisição foi feita, mas não houve resposta do servidor
+    console.error("Não foi possível se conectar ao servidor.");
+    setError(
+      "Não foi possível se conectar ao servidor. Verifique sua conexão de rede."
+    );
+  } else {
+    // Algo aconteceu na configuração da requisição que causou o erro
+    console.error("Erro na configuração da requisição:", error.message);
+  }
+});
  };
 
 const addPerson = async (event) => {
@@ -52,7 +69,7 @@ const toggleForm = () => {
 }
 
 const handleDelete = async (id) => {
-  await personService.remotve (id);
+  await personService.remove (id);
   fetchData();
 }
 
@@ -65,16 +82,16 @@ const handleDelete = async (id) => {
   </button>
 
 {showForm ? (
-      <form onSubmit={addPerson}>
+      <form onSubmit={addPerson}className="bg-success-subtle p-2">
         <div className="mb-3">
           <label htmlFor="nome" className="form-label">
             Nome:
           </label>
           <input
-            type="text"
-            placeholder="Digite o seu nome..."
-            className="form-control"
-            onChange={handleNomeChange}
+          textLabel = "nome"
+          text="Nome"
+           placeholder="Digite seu nome"
+           onChange={handleNomeChange}
           />
         </div>
         <div className="mb-3">
@@ -91,34 +108,10 @@ const handleDelete = async (id) => {
         </div>
       </form>
 ) : (
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Telefone</th>
-            <th scope="col">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {persons.map((person) => (
-            <tr key={person.id}>
-              <td>{person.id}</td>
-              <td>{person.nome}</td>
-              <td>{person.numero}</td>
-              <td> 
-              <Link to = {'/${persons.id}'} className= "btn btn-success">
-                <i class="bi bi-pencil"></i>Editar
-                </Link>
-              <button className= "btn btn-danger mx-2">
-                onClick={() => handleDelete (persons.id)}
-              <i class="bi bi-trash3"></i>Excluir
-              </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div> 
+        <hr />
+        <table persons={persons} handleDelete= {handleDelete}/>
+      </div>
 )}
     </div>
   );
