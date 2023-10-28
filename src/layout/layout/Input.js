@@ -1,9 +1,4 @@
-import InputMask from "react-input-mask";
-
-function Input({ textLabel, text, textPlaceholder, handleChange , isPhone }) {
-let maskFone;
-isPhone ? (maskFone = "(99) 9 9999-9999") : (maskFone = "")
-
+function Input({ textLabel, text, textPlaceholder, handleChange }) {
   return (
     <div className="mb-3">
       <label htmlFor={textLabel} className="form-label">
@@ -15,7 +10,6 @@ isPhone ? (maskFone = "(99) 9 9999-9999") : (maskFone = "")
         className="form-control"
         onChange={handleChange}
         required
-        mask = {maskFone}
       />
     </div>
   );

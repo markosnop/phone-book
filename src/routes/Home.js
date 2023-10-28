@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import personService from "../services/phonebook";
-import { Link } from "react-router-dom";
+import Input from '../layout/input'
 
 function Home() {
   const [persons, setPersons] = useState([]);
@@ -90,15 +90,10 @@ const handleDelete = async (id) => {
           <input
           textLabel = "nome"
           text="Nome"
-           placeholder="Digite seu nome"
+           textPlaceholder="Digite seu nome"
            onChange={handleNomeChange}
           />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="telefone" className="form-label">
-            Telefone:
-          </label>
-          <input
+          <Input
             type="text"
             placeholder="Digite o seu telefone..."
             className="form-control"
